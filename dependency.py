@@ -27,6 +27,13 @@ def check_shared_libraries(binary):
     return list(filter(lambda s: s != '' and s != binaryid, list(map(escape_library_path, outstr.split('\n')))))
 
 
+def check_rpath(binary):
+    out = check_output(["/usr/bin/otool", "-l", binary])
+    outstr = out.decode('utf-8')
+    regexp = re.compile(r'cmd\s+LC_RPATH[\s\S]+?path\s+(.+)\s+\(offset', re.IGNORECASE)
+    return regexp.findall(outstr)
+
+
 def check_library_id(binary):
     out = check_output(["/usr/bin/otool", "-D", binary])
     outstr = out.decode("utf-8")
@@ -79,6 +86,8 @@ def package_shared_libraries(binary='', dstDir='', rpathlist=[], excludelibdir=[
         os.mkdir(dstDir)
     libraries = check_shared_libraries(binary)
     libtobepackaged = []
+    binaryrpathlist = check_rpath(binary)
+    rpathlist += binaryrpathlist
     for lib in libraries:
         libpath = locate_library(lib, rpathlist)
         if libpath == '':

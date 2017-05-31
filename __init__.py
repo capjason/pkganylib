@@ -10,15 +10,18 @@ def pkg_libs():
     binarypath = sys.argv[1]
     dirname = os.path.dirname(binarypath)
     libpath = os.path.join(dirname, "lib")
+
+    # "/usr/local/OpenCV3.2/lib", "/usr/local/Cellar/ffmpeg/3.2/lib",
+    # "/usr/local/Cellar/glew/1.13.0/lib",
+    # "/Users/capjason/workspace/package/StitcherDependencies/library/libevent/lib",
+    # "/Users/capjason/workspace/package/StitcherDependencies/library/exiv2/lib",
+    # "/Users/capjason/workspace/package/StitcherDependencies/library/glfw3/lib",
+    # "/Users/capjason/workspace/package/StitcherDependencies/library/ceres-solver/lib",
+    # "/Users/capjason/workspace/package/StitcherDependencies/library/gflags/lib"
+
     dependency.package_shared_libraries(binarypath, libpath,
-                                        ["/usr/local/OpenCV3.2/lib", "/usr/local/Cellar/ffmpeg/3.2/lib",
-                                         "/usr/local/Cellar/glew/1.13.0/lib",
-                                         "/Users/capjason/workspace/package/StitcherDependencies/library/libevent/lib",
-                                         "/Users/capjason/workspace/package/StitcherDependencies/library/exiv2/lib",
-                                         "/Users/capjason/workspace/package/StitcherDependencies/library/glfw3/lib",
-                                         "/Users/capjason/workspace/package/StitcherDependencies/library/ceres-solver/lib",
-                                         "/Users/capjason/workspace/package/StitcherDependencies/library/gflags/lib"],
-                                        ["/usr/lib/system","/usr/lib"])
+                                        [],
+                                        ["/usr/lib/system", "/usr/lib"])
 
     # print('id', dependency.check_library_id('/usr/local/OpenCV3.2/lib/libopencv_core.dylib'))
 
