@@ -34,6 +34,22 @@ def check_rpath(binary):
     return regexp.findall(outstr)
 
 
+def add_rpath(binary, path):
+    try:
+        print("add rpath", binary, path)
+        check_output(["/usr/bin/install_name_tool", "-add_rpath", path, binary])
+    except Exception as e:
+        print("error when add rpath", e, binary, path)
+
+
+def delete_rpath(binary, path):
+    try:
+        print("delete rpath", binary, path)
+        check_output(["/usr/bin/install_name_tool", "-delete_rpath", path, binary])
+    except AttributeError as e:
+        print("error when delete rpath", e, binary, path)
+
+
 def check_library_id(binary):
     out = check_output(["/usr/bin/otool", "-D", binary])
     outstr = out.decode("utf-8")

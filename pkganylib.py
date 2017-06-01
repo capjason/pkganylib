@@ -13,6 +13,8 @@ def pkg_libs():
     parser.add_argument("--excludedir", metavar='e', action='append',
                         help='directories in which the libraries are ignored',
                         nargs='?', default=[])
+    parser.add_argument("--keep_rpath", dest='keep_rpath', action='store_true')
+    parser.set_defaults(keep_rpath=False)
     args = parser.parse_args()
 
     binarypath = args.input
@@ -26,6 +28,15 @@ def pkg_libs():
         libpath = args.libpath
 
     dependency.package_shared_libraries(binarypath, libpath, args.rpath, args.excludedir)
+
+    if not args.keep_rpath:
+        rpathlist = dependency.check_rpath(binarypath)
+        for rpath in rpathlist:
+            dependency.delete_rpath(binarypath,rpath)
+
+    relativelibpath = os.path.relpath(binarypath,libpath)
+    addedrpath = os.path.join("@executable_path",relativelibpath)
+    dependency.add_rpath(binarypath,addedrpath)
 
     # print('id', dependency.check_library_id('/usr/local/OpenCV3.2/lib/libopencv_core.dylib'))
 
