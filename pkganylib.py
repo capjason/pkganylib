@@ -34,7 +34,7 @@ def pkg_libs():
         for rpath in rpathlist:
             dependency.delete_rpath(binarypath,rpath)
 
-    relativelibpath = os.path.relpath(binarypath,libpath)
+    relativelibpath = os.path.relpath(libpath,binarypath)
     addedrpath = os.path.join("@executable_path",relativelibpath)
     dependency.add_rpath(binarypath,addedrpath)
 
