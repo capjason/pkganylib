@@ -17,6 +17,9 @@ def pkg_libs():
 
     binarypath = args.input
     dirname = os.path.dirname(binarypath)
+
+    print(args.excludedir)
+
     if args.libpath is None:
         libpath = os.path.join(dirname, "lib")
     else:
