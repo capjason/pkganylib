@@ -111,7 +111,7 @@ def package_shared_libraries(binary='', dstDir='', rpathlist=[], excludelibdir=[
             continue
         try:
             libname = os.path.basename(libpath)
-            dstlibpath = os.path.join(dstDir, libname)
+            dstlibpath = os.path.join(os.path.abspath(dstDir), libname)
             libraryid = check_library_id(libpath)
             libdirname = os.path.dirname(libpath)
             if (not os.path.exists(dstlibpath)) and (not libdirname in excludelibdir):
