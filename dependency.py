@@ -121,6 +121,8 @@ def package_shared_libraries(binary='', dstDir='', rpathlist=[], excludelibdir=[
                     change_id_to_rpath(dstlibpath)
                     libraryid = check_library_id(dstlibpath)
                 libtobepackaged.append(dstlibpath)
+            else:
+                libraryid = check_library_id(dstlibpath)
 
             if not lib == libraryid:
                 change_dependency(binary, lib, libraryid)
