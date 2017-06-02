@@ -114,7 +114,9 @@ def package_shared_libraries(binary='', dstDir='', rpathlist=[], excludelibdir=[
             dstlibpath = os.path.join(os.path.abspath(dstDir), libname)
             libraryid = check_library_id(libpath)
             libdirname = os.path.dirname(libpath)
-            if (not os.path.exists(dstlibpath)) and (not libdirname in excludelibdir):
+            if libdirname in excludelibdir:
+                continue
+            if not os.path.exists(dstlibpath):
                 print("copy file from", libpath, "to", dstlibpath)
                 copyfile(libpath, dstlibpath)
                 if not libraryid.startswith("@rpath"):
